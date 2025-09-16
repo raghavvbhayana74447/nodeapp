@@ -14,16 +14,18 @@ pipeline {
         stage('Login to Azure CLI') {
             steps {
                 withCredentials([
-                    usernamePassword(credentialsId: 'SubscriptionPlan', usernameVariable: 'CLIENT_ID', passwordVariable: 'CLIENT_SECRET'),
-                    string(credentialsId: 'AZURE_SUBSCRIPTION_ID', variable: 'SUBSCRIPTION_ID'),
-                    string(credentialsId: 'AZURE_TENANT_ID', variable: 'TENANT_ID')
-                ]) {
-                    sh '''
-                        az login --service-principal -u $CLIENT_ID -p $CLIENT_SECRET --tenant $TENANT_ID
-                        az account set --subscription $SUBSCRIPTION_ID
-                        az account show
-                    '''
-                }
+                string(credentialsId: 'AZURE_CLIENT_ID', variable: 'CLIENT_ID'),
+                string(credentialsId: 'AZURE_CLIENT_SECRET', variable: 'CLIENT_SECRET'),
+                string(credentialsId: 'AZURE_TENANT_ID', variable: 'TENANT_ID'),
+                string(credentialsId: 'AZURE_SUBSCRIPTION_ID', variable: 'SUBSCRIPTION_ID')
+            ]) {
+                sh '''
+                    az login --service-principal -u $CLIENT_ID -p $CLIENT_SECRET --tenant $TENANT_ID
+                    az account set --subscription $SUBSCRIPTION_ID
+                    az account show
+                '''
+}
+
             }
         }
 
