@@ -56,7 +56,8 @@ pipeline{
              steps {
                 sh '''
                     mkdir -p output
-                    zip -r output/app.zip * .[^.]* -x output/\*
+                    zip -r output/app.zip * .[^.]* -x output/*
+
                 '''
             }
         }
