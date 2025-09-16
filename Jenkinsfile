@@ -13,7 +13,8 @@ pipeline{
     }
 
 
-    stages{
+    stages
+    {
         stage('logging in azure cli'){
             steps
             {
@@ -32,16 +33,21 @@ pipeline{
         
         }
         stage('creating az webapp plan'){
+            steps
+            {
             sh '''
             az appservice plan create --name my-app-plan --resource-group RnD-RaghavRG --sku FREE
             '''
+            }
         }
         stage('creating webapp'){
+            steps{
             sh '''
             az webapp create --name myWebApp --resource-group RnD-RaghavRG --plan my-app-plan
             '''
+            }
         }    
-        stage('Install Node') {
+        stage('Install Node'){
         steps {
             sh 'node -v'
             sh 'npm -v'
@@ -78,6 +84,6 @@ pipeline{
                     '''
                 }
             }
+        }
     }
-}
 }
